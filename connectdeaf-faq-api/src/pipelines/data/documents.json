@@ -1,0 +1,84 @@
+{
+  "faq": [
+    {
+      "question": "O que é o ConnectDeaf?",
+      "answer": "O ConnectDeaf é um aplicativo que conecta pessoas surdas com profissionais capacitados para atendê-las, promovendo acessibilidade e inclusão."
+    },
+    {
+      "question": "Como faço para criar uma conta?",
+      "answer": "Você pode criar uma conta diretamente no aplicativo, preenchendo o formulário de cadastro com suas informações pessoais e escolhendo um perfil de usuário ou profissional."
+    },
+    {
+      "question": "Quais profissionais estão disponíveis no ConnectDeaf?",
+      "answer": "O ConnectDeaf conecta você com profissionais em diversas áreas, como saúde, educação, e serviços gerais, todos capacitados para atender pessoas surdas."
+    },
+    {
+      "question": "O ConnectDeaf oferece suporte para tradução em Libras?",
+      "answer": "Sim, o aplicativo possui integração com uma API de tradução para Libras, permitindo maior acessibilidade na comunicação."
+    },
+    {
+      "question": "Como funciona o sistema de agendamento?",
+      "answer": "Você pode agendar serviços diretamente pelo aplicativo, escolhendo o profissional e a data disponível no calendário de agendamentos."
+    },
+    {
+      "question": "É possível avaliar os profissionais após o atendimento?",
+      "answer": "Sim, após o atendimento, você poderá avaliar o profissional e deixar um feedback sobre o serviço prestado."
+    },
+    {
+      "question": "Quais medidas de segurança o ConnectDeaf adota?",
+      "answer": "Utilizamos criptografia de dados, autenticação segura e outras medidas para proteger suas informações pessoais."
+    },
+    {
+      "question": "O que fazer se eu encontrar um problema no aplicativo?",
+      "answer": "Você pode entrar em contato com o suporte técnico pelo próprio aplicativo ou enviar um e-mail para suporte@connectdeaf.com."
+    },
+    {
+      "question": "O aplicativo é gratuito?",
+      "answer": "O download e o uso básico do aplicativo são gratuitos, mas pode haver taxas associadas a serviços específicos prestados por profissionais."
+    },
+    {
+      "question": "Como os profissionais são capacitados para atender pessoas surdas?",
+      "answer": "Os profissionais passam por um treinamento específico em acessibilidade e inclusão, garantindo a comunicação e o atendimento adequados."
+    },
+    {
+      "question": "Como posso cancelar um agendamento?",
+      "answer": "Você pode cancelar um agendamento diretamente na seção 'Meus Agendamentos' do aplicativo, seguindo as instruções de cancelamento."
+    },
+    {
+      "question": "O ConnectDeaf funciona em quais dispositivos?",
+      "answer": "O aplicativo está disponível para dispositivos Android e iOS. Você pode baixá-lo na Google Play Store ou na App Store."
+    },
+    {
+      "question": "Posso usar o ConnectDeaf em outros países?",
+      "answer": "Atualmente, o ConnectDeaf está disponível no Brasil, mas estamos trabalhando para expandir para outros países no futuro."
+    },
+    {
+      "question": "Como os preços dos serviços são definidos?",
+      "answer": "Os preços dos serviços são definidos pelos próprios profissionais e podem variar dependendo do tipo de serviço e localização."
+    },
+    {
+      "question": "Como faço para alterar minhas informações de perfil?",
+      "answer": "Você pode alterar suas informações de perfil acessando a seção 'Minha Conta' no aplicativo."
+    },
+    {
+      "question": "Quais são os métodos de pagamento disponíveis?",
+      "answer": "Os pagamentos podem ser feitos via cartão de crédito, débito ou PIX diretamente pelo aplicativo."
+    },
+    {
+      "question": "O ConnectDeaf armazena meus dados pessoais?",
+      "answer": "Sim, armazenamos seus dados de forma segura e utilizamos apenas para melhorar sua experiência com o aplicativo, em conformidade com a LGPD."
+    },
+    {
+      "question": "Como funciona o sistema de chat do aplicativo?",
+      "answer": "O chat permite a comunicação entre o usuário e o profissional, garantindo que todos os detalhes do serviço sejam combinados de forma acessível."
+    },
+    {
+      "question": "O que acontece se um profissional cancelar um agendamento?",
+      "answer": "Se o profissional cancelar o agendamento, você será notificado e poderá escolher outro profissional ou remarcar o serviço."
+    },
+    {
+      "question": "Como posso sugerir melhorias para o aplicativo?",
+      "answer": "Você pode enviar suas sugestões diretamente pelo aplicativo na seção 'Fale Conosco' ou pelo e-mail suporte@connectdeaf.com."
+    }
+  ]
+}
