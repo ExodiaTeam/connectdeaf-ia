@@ -2,7 +2,7 @@ import json
 
 from config.logs import logger
 from config.settings import settings
-from infra.azuresearch_vector import AzureSearchVectorDB
+from infra.vector_database import AzureSearchVectorDB
 from openai import AzureOpenAI
 
 
