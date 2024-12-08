@@ -1,7 +1,4 @@
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 class Settings:
     """Classe para carregar as configurações do ambiente."""
