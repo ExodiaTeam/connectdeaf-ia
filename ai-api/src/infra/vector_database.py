@@ -3,8 +3,8 @@ import uuid
 
 import pandas as pd
 from azure.core.credentials import AzureKeyCredential
-from azure.search.documents import SearchClient
-from azure.search.documents.indexes import SearchIndexClient
+from azure.search.documents.aio import SearchClient
+from azure.search.documents.indexes.aio import SearchIndexClient
 from azure.search.documents.indexes.models import (
     ExhaustiveKnnAlgorithmConfiguration,
     ExhaustiveKnnParameters,
@@ -58,10 +58,14 @@ class AzureSearchVectorDB:
             azure_endpoint=settings.OPENAI_AZURE_ENDPOINT,
         )
 
-        if self.index_name not in self._get_existing_index_names():
-            self._create_vector_index()
+    async def initialize(self) -> None:
+        """
+        Inicializa o índice de pesquisa vetorial do Azure Search se ele não existir.
+        """
+        if self.index_name not in await self._get_existing_index_names():
+            await self._create_vector_index()
 
-    def insert_document_faq(self, question: str, answer: str) -> None:
+    async def insert_document_faq(self, question: str, answer: str) -> None:
         """
         Insere um documento no índice de pesquisa do Azure com embeddings gerados.
 
@@ -75,7 +79,7 @@ class AzureSearchVectorDB:
             data = {"question": question, "answer": answer}
             data_str = json.dumps(data)
 
-            doc_embeddings = self._generate_embeddings(data_str)
+            doc_embeddings = await self._generate_embeddings(data_str)
 
             doc = {
                 "id": str(uuid.uuid4()),
@@ -84,12 +88,12 @@ class AzureSearchVectorDB:
                 "doc_content_embeddings": doc_embeddings,
             }
 
-            self.search_client.upload_documents(documents=[doc])
+            await self.search_client.upload_documents(documents=[doc])
             logger.info("Document inserted successfully.")
         except Exception as e:
             logger.error(f"Failed to insert document: {e}")
 
-    def insert_document(self, content: str) -> None:
+    async def insert_document(self, content: str) -> None:
         """
         Insere um documento no índice de pesquisa do Azure com embeddings gerados.
 
@@ -99,7 +103,7 @@ class AzureSearchVectorDB:
         try:
             logger.info(f"Inserting a document into index '{self.index_name}'...")
 
-            doc_embeddings = self._generate_embeddings(content)
+            doc_embeddings = await self._generate_embeddings(content)
 
             doc = {
                 "id": str(uuid.uuid4()),
@@ -108,12 +112,14 @@ class AzureSearchVectorDB:
                 "doc_content_embeddings": doc_embeddings,
             }
 
-            self.search_client.upload_documents(documents=[doc])
+            await self.search_client.upload_documents(documents=[doc])
             logger.info("Document inserted successfully.")
         except Exception as e:
             logger.error(f"Failed to insert document: {e}")
 
-    def search_similar_documents(self, query: str, k: int = 3, filters: str = None) -> pd.DataFrame:
+    async def search_similar_documents(
+        self, query: str, k: int = 3, filters: str = None
+    ) -> pd.DataFrame:
         """
         Pesquisa documentos similares no índice de pesquisa do Azure.
 
@@ -125,18 +131,21 @@ class AzureSearchVectorDB:
         Returns:
             pd.DataFrame: Um DataFrame contendo os documentos similares encontrados.
         """
-        query_embedding = self._generate_embeddings(query)
+        query_embedding = self._generate_embeddings(query)  # Remover await
         vector_query = VectorizedQuery(vector=query_embedding, fields="document_vector")
-        results = self.search_client.search(
+        results = await self.search_client.search(
             top=k,
             vector_queries=[vector_query],
             select=["id", "doc_content", "type"],
             filter=filters if filters else "type eq 'doc'",
         )
-        df = pd.DataFrame(results)
+        docs = []
+        async for r in results:
+            docs.append(r)
+        df = pd.DataFrame(docs)
         return df
 
-    def _create_vector_index(self) -> None:
+    async def _create_vector_index(self) -> None:
         """
         Cria o índice vetorial do Azure Search se ele não existir.
         """
@@ -152,7 +161,7 @@ class AzureSearchVectorDB:
         )
 
         try:
-            self.index_client.create_or_update_index(index)
+            await self.index_client.create_or_update_index(index)
             logger.info(f"Index '{self.index_name}' created successfully.")
         except Exception as e:
             logger.error(f"Error creating index '{self.index_name}': {e}")
@@ -217,7 +226,7 @@ class AzureSearchVectorDB:
             ],
         )
 
-    def insert_documents_from_json(self, json_filepath: str) -> None:
+    async def insert_documents_from_json(self, json_filepath: str) -> None:
         """
         Insere documentos de um arquivo JSON no índice de pesquisa do Azure.
 
@@ -229,13 +238,13 @@ class AzureSearchVectorDB:
                 data = json.load(file)
 
             for item in data.get("faq", []):
-                self.insert_document_faq(item["question"], item["answer"])
+                await self.insert_document_faq(item["question"], item["answer"])
 
             logger.info("All documents from JSON file inserted successfully.")
         except Exception as e:
             logger.error(f"Failed to insert documents from JSON file: {e}")
 
-    def _get_existing_index_names(self) -> list:
+    async def _get_existing_index_names(self) -> list:
         """
         Recupera uma lista de nomes de índices existentes no Azure Search.
 
@@ -243,7 +252,7 @@ class AzureSearchVectorDB:
             list: Uma lista de nomes de índices existentes.
         """
         try:
-            return [name for name in self.index_client.list_index_names()]
+            return [name async for name in self.index_client.list_index_names()]
         except Exception as e:
             logger.error(f"Error retrieving existing index names: {e}")
             return []
