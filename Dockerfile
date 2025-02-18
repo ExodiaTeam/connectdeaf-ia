@@ -8,7 +8,7 @@ RUN uv pip install --system --no-cache-dir -r requirements.txt
 
 WORKDIR /app
 
-COPY /connectdeaf-faq-api/src .
+COPY /ai-api/src .
 
 EXPOSE 5000
 
